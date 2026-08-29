@@ -21,8 +21,9 @@ Status: **ACTIVE**
 - [x] Add Loudoun Water planning evidence
 - [x] Add Virginia DEQ permit registry evidence
 - [x] Add Virginia SCC large-load governance context
-- [ ] Add machine-readable project inventory for the demo geography
-- [ ] Add grid/transmission dependency records beyond the first seed project
+- [x] Add first machine-readable project records for the demo geography
+- [x] Add first verified grid/transmission dependency graph
+- [ ] Expand project inventory for the demo geography
 - [ ] Quantify water-supported capacity only when a compatible primary source supports it
 - [ ] Quantify network support only when evidence is defensible
 - [ ] Resolve project-level permit status into a state-transition model
@@ -42,28 +43,39 @@ Status: **ACTIVE**
 
 ## Phase 3 — WebMCP MVP
 
-Status: **CONTRACT DEFINED**
+Status: **IMPLEMENTATION ACTIVE**
 
 - [x] Define tool contract
-- [ ] Implement `evaluate_capacity`
-- [ ] Implement `find_binding_constraint`
-- [ ] Implement `trace_dependency`
-- [ ] Implement `calculate_architecture_gap`
-- [ ] Implement `calculate_critical_path`
-- [ ] Implement `verify_evidence`
-- [ ] Expose tools from a live web application
-- [ ] Verify agent discovery and invocation
+- [x] Implement shared scenario-state tool
+- [x] Implement target mutation tool
+- [x] Implement domain assumption / clear tools
+- [x] Implement capacity evaluation tool
+- [x] Implement evidence-record retrieval tool
+- [x] Implement project dependency trace tool
+- [x] Implement project critical-path tool
+- [x] Register tools through `document.modelContext.registerTool(...)`
+- [x] Connect mutating tools to the human-visible live page state
+- [ ] Verify discovery and invocation in ChatGPT's WebMCP-capable browser
+- [ ] Add end-to-end browser conformance test where practical
 
 ## Phase 4 — Challenge demo
 
-- [ ] Build one scenario editor: target MW + target date
-- [ ] Show known vs unknown domains explicitly
-- [ ] Show binding/provisional constraint
-- [ ] Show architecture gaps
-- [ ] Show evidence drawer for each output
-- [ ] Demonstrate one dependency chain
-- [ ] Record demo video
+Status: **ACTIVE**
+
+- [x] Build scenario editor: target MW + target date
+- [x] Show known vs unknown domains explicitly
+- [x] Show binding/provisional constraint
+- [x] Show architecture gaps
+- [x] Show primary-source evidence registry
+- [x] Demonstrate one verified dependency chain
+- [x] Show why unknown lead times block a false critical-path duration
+- [ ] Add evidence-detail interaction tied directly to outputs
 - [ ] Publish live app
+- [ ] Connect production domain
+- [ ] Test WebMCP in the live deployment
+- [ ] Prepare challenge description
+- [ ] Record demo video
+- [ ] Submit before deadline
 
 ## Phase 5 — Post-MVP expansion
 
