@@ -42,24 +42,28 @@ class EvaluateRequest(BaseModel):
 
 app = FastAPI(
     title="AI Systems Capacity Engine",
-    version="0.2.0",
+    version="0.2.1",
     description="Evidence-aware constraint workbench for AI infrastructure capacity.",
 )
 
 
 @app.middleware("http")
 async def conservative_security_headers(request: Request, call_next):
-    """Add headers that reduce passive browser exposure without breaking WebMCP.
+    """Add browser-integrity headers required by the public WebMCP workbench.
 
-    The MVP intentionally avoids a restrictive CSP until the live ChatGPT/WebMCP
-    browser path has been verified end-to-end. Security controls that could alter
-    agent/browser integration should be introduced only after conformance tests.
+    WebMCP registration requires an origin-keyed agent cluster. The
+    Origin-Agent-Cluster header requests that isolation without imposing the
+    broader COOP/COEP constraints of cross-origin isolation. The tools policy
+    is explicitly limited to this origin.
     """
     response = await call_next(request)
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
-    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Permissions-Policy"] = (
+        "camera=(), microphone=(), geolocation=(), tools=(self)"
+    )
     response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+    response.headers["Origin-Agent-Cluster"] = "?1"
     return response
 
 
