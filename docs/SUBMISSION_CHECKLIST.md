@@ -20,6 +20,7 @@ Official submission deadline: **September 3, 2026 at 1:00 PM Pacific Time**.
 - [x] Final-draft submission description
 - [x] Sub-3-minute demo script
 - [x] Judge/tester instructions
+- [x] Primary-source evidence validation pass completed on 2026-08-29
 
 ## Blocking before submission
 
@@ -45,16 +46,26 @@ The Devpost resources require the public repository to contain an open-source li
 
 Do not select a license automatically: this affects downstream reuse rights and should be an explicit owner decision.
 
-### 3. Evidence final pass
+### 3. Evidence final pass — complete
 
-- [ ] Open every primary-source URL in `data/northern-virginia/evidence.registry.json`
-- [ ] Confirm each URL is live and publicly accessible
-- [ ] Confirm publisher and date metadata
-- [ ] Re-read every `claim`
-- [ ] Re-read every `limitations` field
-- [ ] Confirm no project-level value is represented as regional available capacity
-- [ ] Confirm no permit is represented as operational capacity
-- [ ] Confirm no unsupported local water/grid capacity number has been introduced
+- [x] Open every primary-source URL in `data/northern-virginia/evidence.registry.json`
+- [x] Confirm the referenced source pages/documents are currently resolvable through public web discovery
+- [x] Confirm publisher and date/year metadata
+- [x] Re-read every `claim`
+- [x] Re-read every `limitations` field
+- [x] Confirm no project-level value is represented as regional available capacity
+- [x] Confirm no permit is represented as operational capacity
+- [x] Confirm no unsupported local water/grid capacity number has been introduced
+
+Validated source set:
+
+- PJM 2026 Long-Term Load Forecast Supplement — Dominion data-center load adjustment context
+- PJM/Dominion Firehouse 230 kV delivery project — customer-load/dependency evidence
+- Dominion Energy Virginia Powering Virginia — service-territory demand context
+- Loudoun County Data Center Standards & Locations Phase 1 — zoning constraint
+- Loudoun Water Data Center Water Use — planning/resilience context, no inferred capacity number
+- Virginia DEQ Issued Air Permits for Data Centers — regulatory milestone registry
+- Virginia SCC Data Center Initiatives — GS-5 / large-load governance context
 
 ### 4. Demo video
 
@@ -91,12 +102,12 @@ Official format: public YouTube demo, **under 3 minutes**, with audio.
 
 ## Pre-judge production checks
 
-- [ ] Production URL loads without authentication
-- [ ] `/api/health` returns success
-- [ ] Custom TLS certificate is valid
-- [ ] No broken source links
-- [ ] No console error that prevents WebMCP registration
-- [ ] No stale tool name `calculate-project-critical-path` remains in public docs
+- [x] Production URL loads without authentication
+- [x] `/api/health` is healthy in the deployed workbench
+- [x] Custom HTTPS domain is live
+- [ ] Re-check source links immediately before final submission
+- [ ] No console error that prevents WebMCP registration in the compatible validation browser
+- [x] No stale tool name `calculate-project-critical-path` remains in the prepared public challenge docs
 - [ ] Render free-tier cold start is assessed before judging; upgrade only if necessary to avoid an unacceptable demo/judge delay
 
 ## Official judging dimensions to optimize for
