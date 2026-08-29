@@ -21,6 +21,8 @@ Official submission deadline: **September 3, 2026 at 1:00 PM Pacific Time**.
 - [x] Sub-3-minute demo script
 - [x] Judge/tester instructions
 - [x] Primary-source evidence validation pass completed on 2026-08-29
+- [x] Apache License 2.0 selected and added to the repository
+- [x] Project `NOTICE` added for attribution and brand/license boundary
 
 ## Blocking before submission
 
@@ -36,15 +38,16 @@ Official submission deadline: **September 3, 2026 at 1:00 PM Pacific Time**.
 - [ ] Confirm evidence and dependency tool payloads render correctly in the agent
 - [ ] Confirm `calculate-critical-path` returns incomplete/unknown timing rather than a fabricated duration
 
-### 2. Open-source license
+### 2. Open-source license — complete
 
-The Devpost resources require the public repository to contain an open-source license.
+The public repository uses **Apache License 2.0**.
 
-- [ ] Owner selects the license
-- [ ] Add `LICENSE` to repository root
-- [ ] Confirm repository licensing metadata is visible on GitHub
+- [x] License selected
+- [x] `LICENSE` added to repository root
+- [x] `NOTICE` added to repository root
+- [ ] Confirm GitHub displays Apache-2.0 licensing metadata after merge
 
-Do not select a license automatically: this affects downstream reuse rights and should be an explicit owner decision.
+Rationale: Apache-2.0 is permissive and challenge-compatible, includes an explicit patent grant/termination framework, and does not grant trademark rights beyond reasonable and customary attribution.
 
 ### 3. Evidence final pass — complete
 
@@ -120,11 +123,10 @@ Official format: public YouTube demo, **under 3 minutes**, with audio.
 
 ## Submission gate
 
-Do not call the project challenge-ready until all three conditions are true:
+Do not call the project challenge-ready until the remaining two operational conditions are true:
 
 ```text
 REAL WEBMCP INVOCATION PASSED
-+ OPEN-SOURCE LICENSE ADDED
 + PUBLIC <3 MINUTE DEMO VIDEO VERIFIED
 = READY TO SUBMIT
 ```
