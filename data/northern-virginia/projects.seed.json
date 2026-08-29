@@ -1,0 +1,55 @@
+{
+  "dataset": "northern-virginia-projects-seed",
+  "version": "0.1.0",
+  "retrieved_at": "2026-08-29",
+  "projects": [
+    {
+      "project_id": "loudoun-firehouse-230kv",
+      "name": "Firehouse 230 kV Delivery",
+      "record_type": "LOAD_REQUEST_AND_GRID_DEPENDENCY",
+      "location": "Loudoun County, Virginia",
+      "status": "SOLUTIONS_MEETING_PRESENTED",
+      "status_date": "2026-04-07",
+      "requested_in_service_date": "2030-12-31",
+      "load": {
+        "initial_summer_mw": 209,
+        "initial_winter_mw": 160,
+        "projected_2030_summer_mw": 234,
+        "projected_2030_winter_mw": 234
+      },
+      "dependencies": [
+        "230_kv_delivery",
+        "substation",
+        "transmission_interconnection"
+      ],
+      "evidence_refs": ["ev-pjm-firehouse-load-request-2026"],
+      "interpretation": "A verified example of a large data-center load request that requires new transmission architecture. It is not a measure of Loudoun County available capacity."
+    },
+    {
+      "project_id": "loudoun-yondr-permit-74265-3",
+      "name": "Yondr Data Center",
+      "record_type": "REGULATORY_PERMIT_RECORD",
+      "location": "Loudoun County, Virginia",
+      "status": "AIR_PERMIT_ISSUED",
+      "status_date": "2026-08-13",
+      "permit_id": "74265-3",
+      "load": null,
+      "dependencies": [],
+      "evidence_refs": ["ev-va-deq-issued-dc-permits-2026"],
+      "interpretation": "The issued air permit verifies a regulatory milestone only. Power availability, funding, construction, compute readiness, and operating status remain separate states."
+    },
+    {
+      "project_id": "loudoun-kincora-permit-74296-1",
+      "name": "Kincora Data Center",
+      "record_type": "REGULATORY_PERMIT_RECORD",
+      "location": "Loudoun County, Virginia",
+      "status": "AIR_PERMIT_ISSUED",
+      "status_date": "2026-01-20",
+      "permit_id": "74296-1",
+      "load": null,
+      "dependencies": [],
+      "evidence_refs": ["ev-va-deq-issued-dc-permits-2026"],
+      "interpretation": "The issued air permit verifies a regulatory milestone only. It must not be collapsed into operational capacity."
+    }
+  ]
+}
