@@ -1,75 +1,83 @@
-# WebMCP Tool Contract — MVP
+# WebMCP Tool Contract — Workbench MVP
 
-WebMCP is an interface to the capacity model. It must expose narrow operations with auditable inputs and outputs.
+WebMCP is the agent interface to the same live scenario state used by the human-facing workbench. It is not a separate backend product.
 
-## evaluate_capacity
+The implementation follows the current WebMCP imperative pattern using `document.modelContext.registerTool(...)`. A compatibility fallback to `navigator.modelContext` is retained for earlier browser implementations.
 
-Input:
+## Shared-state tools
+
+### `get-scenario-state`
+Returns the target, current domain assumptions, unknown domains, and latest engine result visible on the page.
+
+### `set-scenario-target`
 
 ```json
 {
-  "location": "Northern Virginia",
   "target_capacity_mw": 5000,
   "target_date": "2030-12-31"
 }
 ```
 
-Output fields:
+Changes the live human-visible target and immediately re-runs the engine.
 
-```text
-deployable_capacity_mw
-provisional_capacity_mw
-binding_constraint
-provisional_binding_constraint
-architecture_gaps_mw
-unknown_domains
-unresolved_controls
-complete
-evidence_refs
+### `set-domain-assumption`
+
+```json
+{
+  "domain": "grid",
+  "capacity_mw": 3100
+}
 ```
 
-### Uncertainty rule
+The value is always classified as `ASSUMED`. It must not inherit evidence references or be represented as an observed fact.
 
-If any required domain is `UNKNOWN`, the tool must not return a final numeric `deployable_capacity_mw` or final `binding_constraint`. It may return a clearly labeled provisional minimum calculated only from known domains.
+### `clear-domain-assumption`
+Restores one domain to `UNKNOWN` and re-runs the engine.
 
-## find_binding_constraint
+### `evaluate-capacity`
+Runs the current live scenario. Final deployable capacity is withheld whenever a required domain remains unknown.
 
-Returns the lowest supported required domain and the evidence chain supporting that determination.
+### `get-evidence-record`
+Returns the source-aware record for one `evidence_id`, including publisher, geography, claim, limitations, and URL.
 
-If required domains remain unknown, the result must be labeled provisional.
+## Dependency tools
 
-## trace_dependency
+### `trace-project-dependencies`
 
-Returns upstream dependencies for a selected node or constraint, including known project, grid, regulatory, or resource prerequisites and evidence references.
+```json
+{
+  "graph_id": "firehouse-grid-delivery"
+}
+```
 
-## calculate_architecture_gap
+Returns the verified dependency closure for the Firehouse 230 kV customer-load example and its evidence references.
 
-Returns the difference between target requirements and documented available capacity by domain.
+### `calculate-project-critical-path`
 
-Unknown capacity must produce an unknown gap, not zero.
+```json
+{
+  "graph_id": "firehouse-grid-delivery"
+}
+```
 
-## calculate_critical_path
+Returns the critical-path state. A numeric duration is withheld when required component lead times are unknown.
 
-Returns the dependency sequence controlling the earliest feasible deployment date.
+## Human-agent interaction rule
 
-A final feasible date must not be emitted when a required dependency has unknown lead time unless the response explicitly identifies that limitation.
+Mutating WebMCP tools must update the same DOM state the human sees. Agent actions are recorded in the page activity log so the user can inspect what changed.
 
-## verify_evidence
+Read-only dependency tools use the same project graph displayed in the human interface.
 
-Returns provenance, geography, verification state, source type, limitations, and upstream evidence for a requested claim or modeled value.
-
-## Geographic rules
-
-- Every numeric evidence observation must have explicit geography.
-- A Dominion/PJM zone number is not automatically a Loudoun County number.
-- A project load request is not regional available capacity.
-- Cross-geography transformations require a documented method and must be classified as `DERIVED`.
-
-## Interface rules
+## Epistemic rules
 
 - Do not infer missing values silently.
-- Return `UNKNOWN` when evidence is insufficient.
+- Return `UNKNOWN` when required evidence is insufficient.
 - Separate facts from scenario assumptions.
-- Separate final outputs from provisional outputs.
-- Every derived output must be traceable to evidence references and documented calculations.
-- Preserve the distinction: `announced != funded != permitted != powered != compute-ready != operational`.
+- Never attach primary-source evidence to a user- or agent-entered assumption.
+- Every derived factual output must be traceable to evidence and documented calculations.
+- A customer load request is not regional available capacity.
+- An issued permit is not equivalent to operational capacity.
+
+## Deferred tool
+
+`verify-claim` remains deferred until every supported claim type has an end-to-end evidence-resolution path in the live application.

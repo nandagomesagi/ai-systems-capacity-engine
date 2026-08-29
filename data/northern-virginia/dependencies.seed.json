@@ -1,0 +1,63 @@
+{
+  "dataset": "northern-virginia-dependency-graphs-seed",
+  "version": "0.1.0",
+  "retrieved_at": "2026-08-29",
+  "graphs": [
+    {
+      "graph_id": "firehouse-grid-delivery",
+      "project_id": "loudoun-firehouse-230kv",
+      "target_node": "firehouse-data-center-load",
+      "interpretation": "Verified dependency closure for the Firehouse customer load request. The source establishes required delivery/interconnection architecture but does not publish defensible component lead times, so timing remains UNKNOWN.",
+      "nodes": [
+        {
+          "node_id": "firehouse-data-center-load",
+          "label": "Firehouse data-center complex load request",
+          "node_type": "AI_LOAD",
+          "lead_time_days": 0,
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        },
+        {
+          "node_id": "firehouse-230kv-delivery",
+          "label": "Firehouse 230 kV delivery architecture",
+          "node_type": "GRID_DELIVERY",
+          "lead_time_days": null,
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        },
+        {
+          "node_id": "firehouse-substation",
+          "label": "New Firehouse substation",
+          "node_type": "SUBSTATION",
+          "lead_time_days": null,
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        },
+        {
+          "node_id": "transmission-interconnection",
+          "label": "Dominion transmission interconnection",
+          "node_type": "TRANSMISSION_INTERCONNECTION",
+          "lead_time_days": null,
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        }
+      ],
+      "edges": [
+        {
+          "upstream": "firehouse-230kv-delivery",
+          "downstream": "firehouse-data-center-load",
+          "relation": "REQUIRES",
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        },
+        {
+          "upstream": "firehouse-substation",
+          "downstream": "firehouse-data-center-load",
+          "relation": "REQUIRES",
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        },
+        {
+          "upstream": "transmission-interconnection",
+          "downstream": "firehouse-data-center-load",
+          "relation": "REQUIRES",
+          "evidence_refs": ["ev-pjm-firehouse-load-request-2026"]
+        }
+      ]
+    }
+  ]
+}
