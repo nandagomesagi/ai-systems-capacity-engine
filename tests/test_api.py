@@ -76,3 +76,32 @@ def test_unknown_domain_name_is_rejected():
     )
     assert response.status_code == 422
     assert "Unknown domain assumptions" in response.json()["detail"]
+
+
+def test_firehouse_dependency_trace_is_evidence_aware():
+    response = client.get("/api/dependencies/firehouse-grid-delivery/trace")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["project_id"] == "loudoun-firehouse-230kv"
+    assert payload["target_node"] == "firehouse-data-center-load"
+    assert set(payload["ordered_dependencies"]) == {
+        "firehouse-230kv-delivery",
+        "firehouse-substation",
+        "transmission-interconnection",
+    }
+    assert payload["evidence_refs"] == ["ev-pjm-firehouse-load-request-2026"]
+
+
+def test_firehouse_critical_path_withholds_unknown_duration():
+    response = client.get("/api/dependencies/firehouse-grid-delivery/critical-path")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["total_lead_time_days"] is None
+    assert payload["complete"] is False
+    assert set(payload["unknown_lead_time_nodes"]) == {
+        "firehouse-230kv-delivery",
+        "firehouse-substation",
+        "transmission-interconnection",
+    }
