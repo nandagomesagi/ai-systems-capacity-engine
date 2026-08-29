@@ -23,6 +23,7 @@ Official submission deadline: **September 3, 2026 at 1:00 PM Pacific Time**.
 - [x] Primary-source evidence validation pass completed on 2026-08-29
 - [x] Apache License 2.0 selected and added to the repository
 - [x] Project `NOTICE` added for attribution and brand/license boundary
+- [x] GitHub repository metadata detects `Apache-2.0`
 
 ## Blocking before submission
 
@@ -45,7 +46,7 @@ The public repository uses **Apache License 2.0**.
 - [x] License selected
 - [x] `LICENSE` added to repository root
 - [x] `NOTICE` added to repository root
-- [ ] Confirm GitHub displays Apache-2.0 licensing metadata after merge
+- [x] GitHub displays `Apache-2.0` licensing metadata
 
 Rationale: Apache-2.0 is permissive and challenge-compatible, includes an explicit patent grant/termination framework, and does not grant trademark rights beyond reasonable and customary attribution.
 
