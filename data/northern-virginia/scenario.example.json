@@ -1,0 +1,44 @@
+{
+  "location": "Northern Virginia",
+  "target_capacity_mw": 5000,
+  "target_date": "2030-12-31",
+  "domains": [
+    {
+      "domain": "power",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    },
+    {
+      "domain": "grid",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    },
+    {
+      "domain": "water",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    },
+    {
+      "domain": "cooling",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    },
+    {
+      "domain": "network",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    },
+    {
+      "domain": "permits",
+      "supported_capacity_mw": null,
+      "epistemic_state": "UNKNOWN",
+      "evidence_refs": []
+    }
+  ],
+  "note": "Template only. Unknown values are intentional until supported by evidence."
+}
