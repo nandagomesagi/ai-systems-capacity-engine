@@ -1,12 +1,36 @@
-# WebMCP Challenge Submission Draft
+# WebMCP Challenge Submission — Final Draft
 
 ## Project
 
 **AI Systems Capacity Engine**
 
+## Live app
+
+https://intelligence.businessaifuture.com
+
+## Public repository
+
+https://github.com/nandagomesagi/ai-systems-capacity-engine
+
 ## One-line description
 
-A shared human-agent constraint workbench that tests whether a target amount of AI infrastructure can actually be supported, identifies what is still unknown, traces required infrastructure dependencies, and preserves the evidence behind each claim.
+An evidence-aware human-agent workbench that tests whether a target amount of AI infrastructure can actually be supported, identifies the first unresolved constraints, traces required infrastructure dependencies, and refuses to turn missing evidence into confident-looking numbers.
+
+## Why this is a strong fit for WebMCP
+
+AI infrastructure planning is not a single search or a static dashboard problem. A user may need to change a target, test hypothetical domain support, compare those assumptions with source-backed facts, evaluate the resulting constraint state, inspect a project dependency chain, and then ask whether the timeline is actually supportable.
+
+WebMCP makes that workflow collaborative. The agent operates on the same live scenario state the human sees instead of working in a separate hidden tool session.
+
+When the agent changes a target or a domain assumption:
+
+- the visible page changes immediately;
+- the action is recorded in the activity log;
+- the entered value is explicitly classified as `ASSUMED`;
+- the constraint engine re-runs against the same state;
+- unresolved evidence remains `UNKNOWN` rather than being silently inferred.
+
+This turns the webpage into a shared decision surface for human and agent.
 
 ## Problem
 
@@ -26,37 +50,35 @@ power
 -> time
 ```
 
-The data also comes from different geographic boundaries and evidence states. A utility-system forecast is not automatically local available capacity. An issued permit is not an operational data center. A project load request is not regional headroom.
+The evidence also comes from different geographic and operational states. A utility forecast is not automatically local available capacity. An issued permit is not an operational data center. A customer load request is not regional headroom.
 
-The project therefore asks:
+The system therefore asks:
 
 > Given a target AI scale, what architecture is required, what limits deployment, and what can be supported by the target date?
 
-## What the MVP does
+## What people and agents can do together
 
 The first demonstration focuses on Northern Virginia, with Loudoun County as the core project geography.
 
-A human or agent can:
+A human and agent can jointly:
 
-1. set a target capacity and date;
-2. inspect which required domains are still unknown;
-3. enter explicit scenario assumptions without confusing them with observed facts;
-4. run the same constraint engine;
-5. inspect provisional and final capacity states;
-6. inspect architecture gaps;
-7. retrieve primary-source evidence records;
-8. trace a verified grid dependency example;
-9. ask for a critical path and receive `UNKNOWN` rather than a fabricated duration when lead times are not supported by evidence.
+1. inspect the current scenario and unresolved domains;
+2. change the target capacity and target date;
+3. add explicit hypothetical support values for required domains;
+4. restore those values to `UNKNOWN`;
+5. run the evidence-aware constraint engine;
+6. inspect provisional versus final capacity states and architecture gaps;
+7. retrieve a source-aware evidence record with its geography and limitations;
+8. trace a verified project dependency chain;
+9. evaluate timing completeness without fabricating a critical-path duration.
 
-## Why WebMCP matters
+Before WebMCP, an agent could describe what a user should type into a dashboard or operate against a separate API. Here, the agent directly updates the same browser state that the human is inspecting, while preserving provenance and epistemic state.
 
-WebMCP is not attached as a decorative API layer. The agent works on the same live scenario state that the human sees.
+## How WebMCP is implemented
 
-For example, an agent can change a target from 5,000 MW to 3,500 MW, set a hypothetical grid-support assumption, run the model, and the visible page updates immediately. The human can see exactly what changed and can distinguish agent-entered assumptions from source-backed observations.
+The page uses the imperative WebMCP API through `document.modelContext.registerTool(...)`, with a compatibility fallback to `navigator.modelContext` for earlier implementations.
 
-This makes the page a collaborative decision surface instead of a dashboard that an agent merely reads.
-
-## Current WebMCP tools
+Eight tools are registered:
 
 ```text
 get-scenario-state
@@ -66,8 +88,12 @@ clear-domain-assumption
 evaluate-capacity
 get-evidence-record
 trace-project-dependencies
-calculate-project-critical-path
+calculate-critical-path
 ```
+
+The tool schemas reject unexpected properties. Read-only and external-content tools carry appropriate annotations. Mutating tool execution supports cancellation and updates the same DOM state used by the human-facing workbench.
+
+The production response requests an origin-keyed agent cluster and restricts the WebMCP permissions policy to the same origin.
 
 ## Evidence and uncertainty contract
 
@@ -91,47 +117,25 @@ Rules:
 
 ## Verified dependency example
 
-The MVP includes the PJM/Dominion Firehouse 230 kV delivery example in Loudoun County. The primary record verifies a large data-center customer load request and required delivery/interconnection architecture.
+The MVP includes the PJM/Dominion Firehouse 230 kV delivery example in Loudoun County. The source record supports a customer load request and associated delivery/interconnection architecture.
 
-The project uses that evidence to demonstrate dependency tracing while explicitly refusing to reinterpret the project request as regional available capacity.
+The system uses that evidence to demonstrate dependency tracing while explicitly refusing to reinterpret the project request as regional available capacity.
 
-## Demo script
+## Demo sequence
 
-### Scene 1 — Start from uncertainty
+The demo begins with all required capacity domains unresolved. Final deployable capacity is therefore withheld.
 
-Open the workbench. Required domains are `UNKNOWN`; final deployable capacity is withheld.
+The agent then:
 
-### Scene 2 — Agent inspects live state
+1. reads the live scenario;
+2. changes the target;
+3. sets one explicit grid assumption;
+4. evaluates the scenario and shows that unknown domains still prevent a final answer;
+5. retrieves a primary-source evidence record and its limitations;
+6. traces the Firehouse dependency chain;
+7. calculates timing completeness and returns an incomplete critical path because evidence-backed component lead times are missing.
 
-Ask the agent to read the current target and list unresolved domains through `get-scenario-state`.
-
-### Scene 3 — Agent changes the same page the human sees
-
-Ask the agent to change the target capacity/date. The visible form changes.
-
-### Scene 4 — Explicit assumptions
-
-Ask the agent to set a hypothetical supported capacity for selected domains. Each input is visibly labeled `ASSUMED`.
-
-### Scene 5 — Constraint evaluation
-
-Ask the agent to evaluate the scenario. If required domains remain unknown, the engine withholds a final capacity value and may show only a provisional known minimum.
-
-### Scene 6 — Evidence
-
-Ask for a primary-source record. The tool returns publisher, geography, claim, limitations, and source URL.
-
-### Scene 7 — Dependency graph
-
-Ask the agent to trace `firehouse-grid-delivery`. Show the same dependency state in the page.
-
-### Scene 8 — No false critical path
-
-Ask for the project critical path. The engine returns an incomplete timing state because required component lead times are not supported by the ingested evidence.
-
-End on:
-
-> Architecture Before Amplification. Limits Before Scale.
+The point is not that the model always produces a number. The point is that the human and agent can work together without erasing the boundary between evidence, assumptions, and unknowns.
 
 ## What is deliberately not claimed
 
@@ -144,7 +148,7 @@ The MVP does not claim:
 - a synthetic ethics or readiness score;
 - investment advice.
 
-The point of the MVP is to prove a source-aware constraint architecture that can expand without discarding uncertainty.
+The MVP proves a source-aware constraint architecture that can expand without discarding uncertainty.
 
 ## Long-term direction
 
@@ -175,4 +179,8 @@ forecast
 -> revised capacity state
 ```
 
-The MVP is the first auditable cell of that larger system.
+The Northern Virginia MVP is the first auditable cell of that larger system.
+
+## Closing line
+
+**Architecture Before Amplification. Limits Before Scale.**
