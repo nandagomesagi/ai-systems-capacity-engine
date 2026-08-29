@@ -139,6 +139,22 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(111,183,25
 .activity-log li { padding: 5px 0; }
 .activity-log strong { color: var(--text); }
 
+.dependency-panel { margin-top: 18px; }
+.dependency-list { display: grid; gap: 8px; }
+.dependency-item {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.018);
+}
+.dependency-item span { color: var(--accent); font-size: 1rem; }
+.dependency-item strong { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.79rem; font-weight: 600; overflow-wrap: anywhere; }
+
 footer { max-width: 1280px; margin: 0 auto; padding: 0 24px 30px; display: flex; justify-content: space-between; gap: 16px; color: #75899c; font-size: 0.74rem; }
 
 @media (max-width: 900px) {
