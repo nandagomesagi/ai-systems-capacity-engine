@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import asdict
 from datetime import date
 from pathlib import Path
 from typing import Dict, Optional
@@ -10,6 +11,12 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from .dependencies import (
+    DependencyEdge,
+    DependencyNode,
+    calculate_critical_path,
+    trace_dependencies,
+)
 from .engine import evaluate_capacity
 from .io import (
     apply_scenario_assumptions,
@@ -24,6 +31,7 @@ WEB_DIR = ROOT / "webapp"
 SCENARIO_PATH = DATA_DIR / "scenario.example.json"
 EVIDENCE_PATH = DATA_DIR / "evidence.registry.json"
 PROJECTS_PATH = DATA_DIR / "projects.seed.json"
+DEPENDENCIES_PATH = DATA_DIR / "dependencies.seed.json"
 
 
 class EvaluateRequest(BaseModel):
@@ -44,6 +52,37 @@ app.mount("/assets", StaticFiles(directory=WEB_DIR), name="assets")
 def _load_json(path: Path):
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def _dependency_graph(graph_id: str) -> dict:
+    dataset = _load_json(DEPENDENCIES_PATH)
+    for graph in dataset.get("graphs", []):
+        if graph.get("graph_id") == graph_id:
+            return graph
+    raise HTTPException(status_code=404, detail="Dependency graph not found")
+
+
+def _dependency_objects(graph: dict):
+    nodes = [
+        DependencyNode(
+            node_id=item["node_id"],
+            label=item["label"],
+            node_type=item["node_type"],
+            lead_time_days=item.get("lead_time_days"),
+            evidence_refs=list(item.get("evidence_refs", [])),
+        )
+        for item in graph.get("nodes", [])
+    ]
+    edges = [
+        DependencyEdge(
+            upstream=item["upstream"],
+            downstream=item["downstream"],
+            relation=item.get("relation", "REQUIRES"),
+            evidence_refs=list(item.get("evidence_refs", [])),
+        )
+        for item in graph.get("edges", [])
+    ]
+    return nodes, edges
 
 
 @app.get("/", include_in_schema=False)
@@ -78,6 +117,37 @@ def evidence_record(evidence_id: str) -> dict:
 @app.get("/api/projects")
 def projects() -> dict:
     return _load_json(PROJECTS_PATH)
+
+
+@app.get("/api/dependencies")
+def dependency_graphs() -> dict:
+    return _load_json(DEPENDENCIES_PATH)
+
+
+@app.get("/api/dependencies/{graph_id}/trace")
+def dependency_trace(graph_id: str) -> dict:
+    graph = _dependency_graph(graph_id)
+    nodes, edges = _dependency_objects(graph)
+    trace = trace_dependencies(nodes, edges, graph["target_node"])
+    return {
+        "graph_id": graph_id,
+        "project_id": graph.get("project_id"),
+        "interpretation": graph.get("interpretation"),
+        **asdict(trace),
+    }
+
+
+@app.get("/api/dependencies/{graph_id}/critical-path")
+def dependency_critical_path(graph_id: str) -> dict:
+    graph = _dependency_graph(graph_id)
+    nodes, edges = _dependency_objects(graph)
+    result = calculate_critical_path(nodes, edges, graph["target_node"])
+    return {
+        "graph_id": graph_id,
+        "project_id": graph.get("project_id"),
+        "interpretation": graph.get("interpretation"),
+        **asdict(result),
+    }
 
 
 @app.post("/api/evaluate")
