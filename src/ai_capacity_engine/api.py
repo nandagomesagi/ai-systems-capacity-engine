@@ -6,7 +6,7 @@ from datetime import date
 from pathlib import Path
 from typing import Dict, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -45,6 +45,23 @@ app = FastAPI(
     version="0.2.0",
     description="Evidence-aware constraint workbench for AI infrastructure capacity.",
 )
+
+
+@app.middleware("http")
+async def conservative_security_headers(request: Request, call_next):
+    """Add headers that reduce passive browser exposure without breaking WebMCP.
+
+    The MVP intentionally avoids a restrictive CSP until the live ChatGPT/WebMCP
+    browser path has been verified end-to-end. Security controls that could alter
+    agent/browser integration should be introduced only after conformance tests.
+    """
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+    return response
+
 
 app.mount("/assets", StaticFiles(directory=WEB_DIR), name="assets")
 

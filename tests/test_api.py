@@ -6,6 +6,16 @@ from ai_capacity_engine.api import app
 client = TestClient(app)
 
 
+def test_root_and_conservative_security_headers():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "AI Systems Capacity Engine" in response.text
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["referrer-policy"] == "no-referrer"
+    assert "camera=()" in response.headers["permissions-policy"]
+    assert response.headers["cross-origin-resource-policy"] == "same-origin"
+
+
 def test_health_and_default_scenario():
     health = client.get("/api/health")
     assert health.status_code == 200
@@ -76,6 +86,15 @@ def test_unknown_domain_name_is_rejected():
     )
     assert response.status_code == 422
     assert "Unknown domain assumptions" in response.json()["detail"]
+
+
+def test_evidence_record_endpoint_preserves_limitations():
+    response = client.get("/api/evidence/ev-pjm-firehouse-load-request-2026")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["source_type"] == "PRIMARY"
+    assert payload["geography"] == "Loudoun County, Virginia"
+    assert "must not be interpreted as available regional capacity" in payload["limitations"]
 
 
 def test_firehouse_dependency_trace_is_evidence_aware():
