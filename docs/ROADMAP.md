@@ -29,16 +29,16 @@ Status: **ACTIVE**
 
 ## Phase 2 — Dependency and time engine
 
-Status: **NEXT**
+Status: **ACTIVE**
 
-- [ ] Add typed dependency nodes and edges
+- [x] Add typed dependency nodes and edges
 - [ ] Add dependency criticality
-- [ ] Add build-time / lead-time fields
+- [x] Add build-time / lead-time fields
 - [ ] Add replacement-time fields
 - [ ] Add redundancy / single-point-of-failure fields
-- [ ] Implement dependency tracing
-- [ ] Implement critical-path calculation
-- [ ] Calculate earliest feasible date only when required timing inputs are known
+- [x] Implement dependency tracing
+- [x] Implement uncertainty-aware critical-path calculation
+- [ ] Calculate earliest feasible calendar date only when required timing inputs are known
 
 ## Phase 3 — WebMCP MVP
 
