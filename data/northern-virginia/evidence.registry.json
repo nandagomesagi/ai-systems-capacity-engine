@@ -1,0 +1,127 @@
+{
+  "dataset": "northern-virginia-evidence-registry",
+  "version": "0.1.0",
+  "retrieved_at": "2026-08-29",
+  "records": [
+    {
+      "evidence_id": "ev-pjm-dom-load-adjustment-2026",
+      "publisher": "PJM Interconnection",
+      "source_type": "PRIMARY",
+      "publication_year": 2026,
+      "url": "https://www.pjm.com/-/media/DotCom/planning/res-adeq/load-forecast/load-forecast-supplement-2026.pdf",
+      "geography": "Dominion transmission zone",
+      "geography_type": "transmission_zone",
+      "domains": ["power", "grid"],
+      "epistemic_state": "OBSERVED",
+      "claim": "PJM's 2026 load forecast applies a Dominion-zone adjustment for data-center growth and distinguishes firm and non-firm large-load additions.",
+      "numeric_value": null,
+      "unit": null,
+      "use_in_engine": "CONTEXT_ONLY",
+      "limitations": "This source establishes forecast methodology and large-load adjustments but does not by itself establish Loudoun County available grid headroom."
+    },
+    {
+      "evidence_id": "ev-dominion-va-demand-2035",
+      "publisher": "Dominion Energy Virginia",
+      "source_type": "PRIMARY",
+      "publication_year": 2026,
+      "url": "https://www.dominionenergy.com/poweringvirginia",
+      "geography": "Dominion Energy Virginia service territory",
+      "geography_type": "utility_service_territory",
+      "domains": ["power"],
+      "epistemic_state": "OBSERVED",
+      "claim": "Dominion reports a winter 2025 system peak of 24,678 MW and a projected peak demand of 41,500 MW in 2035.",
+      "numeric_values": [
+        {"metric": "winter_2025_peak", "value": 24678, "unit": "MW"},
+        {"metric": "projected_2035_peak", "value": 41500, "unit": "MW"}
+      ],
+      "use_in_engine": "CONTEXT_ONLY",
+      "limitations": "Service-territory system demand is not equivalent to additional deployable capacity in Loudoun County."
+    },
+    {
+      "evidence_id": "ev-pjm-firehouse-load-request-2026",
+      "publisher": "PJM Interconnection / Dominion Energy Virginia",
+      "source_type": "PRIMARY",
+      "publication_date": "2026-04-07",
+      "url": "https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260407/20260407-item-09---dom-supplemental-projects.pdf",
+      "geography": "Loudoun County, Virginia",
+      "geography_type": "project_site",
+      "domains": ["grid", "power", "infrastructure"],
+      "epistemic_state": "OBSERVED",
+      "claim": "A Dominion delivery-point request for the Firehouse 230 kV delivery project is intended to serve a Loudoun County data-center complex. The PJM material lists 209 MW initial summer load and 234 MW projected summer and winter load in 2030.",
+      "numeric_values": [
+        {"metric": "initial_summer_load", "value": 209, "unit": "MW"},
+        {"metric": "initial_winter_load", "value": 160, "unit": "MW"},
+        {"metric": "projected_2030_summer_load", "value": 234, "unit": "MW"},
+        {"metric": "projected_2030_winter_load", "value": 234, "unit": "MW"}
+      ],
+      "use_in_engine": "PROJECT_DEPENDENCY",
+      "limitations": "This is a specific customer-load request and must not be interpreted as available regional capacity."
+    },
+    {
+      "evidence_id": "ev-loudoun-zoning-phase1-2025",
+      "publisher": "Loudoun County, Virginia",
+      "source_type": "PRIMARY",
+      "publication_date": "2025-03-18",
+      "url": "https://www.loudoun.gov/6221/Phase-1-Project-Plan-for-Data-Center-Sta",
+      "geography": "Loudoun County, Virginia",
+      "geography_type": "county",
+      "domains": ["permits", "land", "governance"],
+      "epistemic_state": "OBSERVED",
+      "claim": "Loudoun County approved changes making data centers a conditional use and requiring Special Exception approval in specified industrial zoning districts, subject to grandfathering rules for eligible earlier applications.",
+      "numeric_value": null,
+      "unit": null,
+      "use_in_engine": "CONSTRAINT_RULE",
+      "limitations": "A county-wide zoning rule does not determine whether an individual project is approved; project-specific status must be verified separately."
+    },
+    {
+      "evidence_id": "ev-loudoun-water-data-centers-2026",
+      "publisher": "Loudoun Water",
+      "source_type": "PRIMARY",
+      "publication_year": 2026,
+      "url": "https://www.loudounwater.org/data-center-water-use",
+      "geography": "Loudoun Water service area",
+      "geography_type": "utility_service_territory",
+      "domains": ["water", "cooling", "resilience"],
+      "epistemic_state": "OBSERVED",
+      "claim": "Loudoun Water states that current and projected direct on-site consumptive water use by data centers is part of regional water-supply planning and identifies reclaimed water and quarry-storage programs as resilience resources.",
+      "numeric_value": null,
+      "unit": null,
+      "use_in_engine": "CONTEXT_ONLY",
+      "limitations": "The machine-readable page text available to this dataset does not establish a defensible numeric amount of additional water capacity for the MVP scenario. Water-supported AI capacity remains UNKNOWN until a compatible quantified source is ingested."
+    },
+    {
+      "evidence_id": "ev-va-deq-issued-dc-permits-2026",
+      "publisher": "Virginia Department of Environmental Quality",
+      "source_type": "PRIMARY",
+      "publication_date": "2026-08-17",
+      "url": "https://www.deq.virginia.gov/news-info/shortcuts/permits/air/issued-air-permits-for-data-centers",
+      "geography": "Virginia — Northern DEQ region",
+      "geography_type": "state_regulatory_region",
+      "domains": ["permits", "infrastructure"],
+      "epistemic_state": "OBSERVED",
+      "claim": "Virginia DEQ publishes an issued-air-permit registry for data centers, including numerous Loudoun County facilities and permit dates.",
+      "numeric_value": null,
+      "unit": null,
+      "use_in_engine": "PROJECT_VERIFICATION",
+      "limitations": "An issued air permit verifies one regulatory state; it does not prove a project is funded, grid-connected, compute-ready, or operational."
+    },
+    {
+      "evidence_id": "ev-va-scc-data-center-controls-2026",
+      "publisher": "Virginia State Corporation Commission",
+      "source_type": "PRIMARY",
+      "publication_year": 2026,
+      "url": "https://www.scc.virginia.gov/about-the-scc/scc-facts/",
+      "geography": "Virginia",
+      "geography_type": "state",
+      "domains": ["governance", "power", "capital"],
+      "epistemic_state": "OBSERVED",
+      "claim": "The SCC describes a separate GS-5 rate class for large-load customers, minimum contract obligations for qualifying new customers, minimum transmission/distribution charges, and review of Dominion's large-load interconnection process.",
+      "numeric_values": [
+        {"metric": "minimum_contract_term", "value": 14, "unit": "years"},
+        {"metric": "minimum_transmission_distribution_charge", "value": 85, "unit": "percent"}
+      ],
+      "use_in_engine": "GOVERNANCE_CONTEXT",
+      "limitations": "These are state-level utility controls and do not by themselves satisfy the engine's cyber-security controls or prove project feasibility."
+    }
+  ]
+}
