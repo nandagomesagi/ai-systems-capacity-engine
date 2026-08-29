@@ -14,7 +14,7 @@ https://github.com/nandagomesagi/ai-systems-capacity-engine
 
 ## One-line description
 
-An evidence-aware human-agent workbench that tests whether a target amount of AI infrastructure can actually be supported, identifies the first unresolved constraints, traces required infrastructure dependencies, and refuses to turn missing evidence into confident-looking numbers.
+A WebMCP workbench where humans and agents test whether announced AI infrastructure can actually become deployable capacity — changing the same live scenario, tracing dependencies and evidence, and refusing to turn missing inputs into confident-looking numbers.
 
 ## Why this is a strong fit for WebMCP
 
