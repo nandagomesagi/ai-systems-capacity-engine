@@ -74,7 +74,11 @@ set-domain-assumption
 clear-domain-assumption
 evaluate-capacity
 get-evidence-record
+trace-project-dependencies
+calculate-project-critical-path
 ```
+
+The Firehouse dependency example deliberately withholds a numeric critical-path duration because the primary source does not publish defensible component lead times.
 
 WebMCP is an interface to the model, not the product itself.
 
@@ -108,7 +112,7 @@ CI runs the test suite on pushes to `main` and pull requests.
 ## Repository map
 
 ```text
-data/northern-virginia/   source-aware MVP datasets
+data/northern-virginia/   source-aware MVP datasets and dependency graph seeds
 docs/                     model, architecture, evidence, charter, roadmap
 src/ai_capacity_engine/   Python constraint and dependency engines
 webapp/                   human + WebMCP shared-state workbench
