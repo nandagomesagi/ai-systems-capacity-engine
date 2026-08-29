@@ -2,7 +2,7 @@
 
 ## Scope
 
-Audit the public workbench implementation against the current WebMCP draft and Chrome implementation guidance before challenge submission.
+Audit the workbench implementation against the current WebMCP draft and Chrome implementation guidance.
 
 Primary references:
 
@@ -11,7 +11,6 @@ Primary references:
 - Chrome Imperative API: https://developer.chrome.com/docs/ai/webmcp/imperative-api
 - Chrome WebMCP tool security: https://developer.chrome.com/docs/ai/webmcp/secure-tools
 - Chrome WebMCP best practices: https://developer.chrome.com/docs/ai/webmcp/best-practices
-- OpenAI WebMCP Challenge: https://openai.com/webmcp-challenge/
 
 ## Findings
 
@@ -75,7 +74,7 @@ The longest tool name was shortened from `calculate-project-critical-path` to `c
 
 ## Automated guards
 
-CI now checks:
+CI checks:
 
 - Python tests;
 - JavaScript syntax with `node --check`;
@@ -91,7 +90,7 @@ CI now checks:
 
 This audit establishes source-level and CI-level conformance. It does **not** replace a real browser-agent invocation test.
 
-Before challenge submission, validate on a WebMCP-capable environment that:
+Before claiming end-to-end WebMCP validation, verify in a compatible environment that:
 
 1. all eight tools are discovered;
 2. each tool can be invoked successfully;
@@ -99,6 +98,6 @@ Before challenge submission, validate on a WebMCP-capable environment that:
 4. read-only tools return the expected evidence/dependency data;
 5. cancellation behaves correctly for pending requests;
 6. `calculate-critical-path` preserves `UNKNOWN` when lead times are unsupported;
-7. ChatGPT or the Chrome inspector selects the intended tool from natural-language prompts.
+7. the agent selects the intended tool from natural-language prompts.
 
-The current user's Mac/Chrome environment is too old for that browser-level validation, so this final step remains explicitly pending.
+Browser-level validation remains explicitly pending until those checks are completed in a compatible runtime.
