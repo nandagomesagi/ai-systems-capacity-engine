@@ -142,6 +142,12 @@ webmcp/                   agent tool contracts
 tests/                    model, evidence, API, dependency and WebMCP contract tests
 ```
 
+## License
+
+The repository code and documentation are licensed under the **Apache License 2.0**. See `LICENSE` and `NOTICE`.
+
+Apache-2.0 was selected to keep the challenge repository genuinely open source while preserving explicit patent terms and keeping project/brand identifiers outside the software-license grant except for customary attribution.
+
 ## Status
 
 **MODEL MVP v0.1 + WebMCP workbench deployed.**
