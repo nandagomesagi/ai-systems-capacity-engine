@@ -2,6 +2,8 @@
 
 Constraint-based model for AI infrastructure capacity, strategic dependencies, cyber resilience, governance, and time-to-deploy.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/nandagomesagi/ai-systems-capacity-engine)
+
 ## Core question
 
 > Given a target AI scale, what architecture is required, what limits deployment, and what can be securely sustained by a given date?
@@ -81,6 +83,12 @@ calculate-project-critical-path
 The Firehouse dependency example deliberately withholds a numeric critical-path duration because the primary source does not publish defensible component lead times.
 
 WebMCP is an interface to the model, not the product itself.
+
+## Deploy
+
+A repository-root `render.yaml` defines the challenge web service. The Deploy to Render button above opens the Blueprint for this repository. Deployment uses the tested `main` branch, a pinned Python 3.11 runtime, Uvicorn, and `/api/health` as the health-check path.
+
+Do not configure the planned custom domain until the first Render deployment is healthy and Render provides the exact DNS target.
 
 ## Run locally
 
