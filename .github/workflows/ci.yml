@@ -24,9 +24,9 @@ jobs:
 
       - name: Check browser JavaScript syntax
         run: |
-          node --check webapp/webmcp.js
-          node --check webapp/app.js
-          node --check webapp/dependencies-ui.js
+          node --input-type=module --check < webapp/webmcp.js
+          node --input-type=module --check < webapp/app.js
+          node --input-type=module --check < webapp/dependencies-ui.js
 
       - name: Test
         run: pytest -q
