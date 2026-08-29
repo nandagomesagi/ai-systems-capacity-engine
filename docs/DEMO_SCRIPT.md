@@ -1,6 +1,6 @@
 # WebMCP Challenge Demo Script
 
-Target length: **2:30–2:50**. The official challenge requires a public demo video under 3 minutes with audio.
+Target length: **2:20–2:40**. The official challenge requires a public demo video under 3 minutes with audio.
 
 ## Recording setup
 
@@ -9,8 +9,16 @@ Target length: **2:30–2:50**. The official challenge requires a public demo vi
 - Confirm the page shows `API: ok` and `WebMCP: 8 tools` before recording.
 - Keep the page and agent interaction visible whenever practical.
 - Do not prefill unsupported capacity values as facts.
+- Validate all eight tools before recording; the video itself only needs the clearest subset of calls.
 
-## 0:00–0:20 — Problem and product
+## Judge takeaway
+
+The demo should make two ideas obvious without explanation after the video ends:
+
+1. WebMCP lets the agent operate the same decision surface the human sees.
+2. The engine preserves the difference between evidence, assumptions and unknowns even when an agent is operating it.
+
+## 0:00–0:15 — Hook
 
 ### Screen
 
@@ -18,7 +26,7 @@ Show the top of the workbench with the default Northern Virginia / Loudoun Count
 
 ### Narration
 
-> AI infrastructure plans are often summarized as a target number and a date. But announced capacity is not the same as deployable capacity. This workbench asks what architecture has to exist first, what remains unknown, and what can actually be supported by the target date.
+> AI infrastructure announcements are not deployable capacity. This workbench lets a human and an AI agent test what has to exist first, what remains unknown, and what can actually be supported by a target date.
 
 Point briefly to:
 
@@ -26,7 +34,7 @@ Point briefly to:
 - `Limits Before Scale`
 - final deployable capacity = `UNKNOWN`
 
-## 0:20–0:40 — Agent reads the live page
+## 0:15–0:35 — Agent reads the live page
 
 ### Prompt
 
@@ -40,7 +48,7 @@ Point briefly to:
 
 The agent reads the same live scenario visible on the page. No manual copying of dashboard values is required.
 
-## 0:40–1:05 — Agent changes shared state
+## 0:35–1:00 — Agent changes shared state
 
 ### Prompt
 
@@ -66,7 +74,7 @@ Show that:
 - the domain is labeled `ASSUMED`;
 - the activity log records the agent action.
 
-## 1:05–1:30 — No false precision
+## 1:00–1:25 — No false precision
 
 ### Prompt
 
@@ -78,7 +86,7 @@ Show that:
 
 ### Narration
 
-> Grid now has an explicit scenario assumption, but the other required domains remain unknown. The engine therefore refuses to publish a final deployable-capacity number. It can show a provisional known minimum without pretending that the scenario is complete.
+> The agent can change the scenario, but it cannot erase uncertainty. Grid is now an explicit assumption, while the other required domains remain unknown, so the engine withholds a final deployable-capacity number.
 
 Show:
 
@@ -87,7 +95,7 @@ Show:
 - unresolved domain chips;
 - `Model state: INCOMPLETE`
 
-## 1:30–1:55 — Evidence with limitations
+## 1:25–1:50 — Evidence with limitations
 
 ### Prompt
 
@@ -99,9 +107,9 @@ Show:
 
 ### Narration
 
-> Evidence is not just a URL. The record retains publisher, geography, claim, epistemic state, and limitations. A customer load request cannot be silently converted into regional available capacity.
+> Evidence is not just a link. The record retains publisher, geography, claim and limitations. A customer load request cannot be silently converted into regional available capacity.
 
-## 1:55–2:20 — Dependency graph
+## 1:50–2:12 — Dependency graph
 
 ### Prompt
 
@@ -115,9 +123,9 @@ Show the dependency chain and evidence reference.
 
 ### Narration
 
-> The same source can support a dependency relationship without supporting a regional-capacity claim.
+> The same primary source can support a dependency relationship without supporting a regional-capacity claim.
 
-## 2:20–2:40 — Critical path refuses fabrication
+## 2:12–2:30 — Critical path refuses fabrication
 
 ### Prompt
 
@@ -129,7 +137,7 @@ Show the dependency chain and evidence reference.
 
 ### Narration
 
-> The source does not provide defensible lead times for every required component, so the system returns an incomplete timing state instead of fabricating a duration.
+> Required component lead times are not fully supported by the evidence, so the system returns incomplete timing instead of fabricating a duration.
 
 Show:
 
@@ -137,7 +145,7 @@ Show:
 - incomplete state;
 - unknown lead-time nodes.
 
-## 2:40–2:50 — Close
+## 2:30–2:40 — Close
 
 ### Screen
 
@@ -145,12 +153,14 @@ Return to the workbench headline and shared state.
 
 ### Narration
 
-> Humans and agents can test scale together while keeping facts, assumptions, dependencies, and unknowns separate. Architecture Before Amplification. Limits Before Scale.
+> Humans and agents can test scale together without confusing facts, assumptions and unknowns. Architecture Before Amplification. Limits Before Scale.
 
 ## Recording rules
 
 - Do not exceed 3 minutes.
 - Include audible narration.
+- Keep the opening hook under 15 seconds.
+- Do not explain implementation details that the screen can prove visually.
 - Do not speed through tool calls so quickly that page mutations are invisible.
 - If a tool call fails, restart the recording rather than hiding the failure with editing.
-- Do not claim end-to-end WebMCP validation until the eight tools have been discovered in the recording environment.
+- Do not claim end-to-end WebMCP validation until all eight tools have been discovered and invoked successfully in the recording environment.
