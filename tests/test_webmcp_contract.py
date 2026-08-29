@@ -4,6 +4,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 WEBMCP_SOURCE = (ROOT / "webapp" / "webmcp.js").read_text(encoding="utf-8")
+INDEX_SOURCE = (ROOT / "webapp" / "index.html").read_text(encoding="utf-8")
 
 
 EXPECTED_TOOLS = {
@@ -49,3 +50,15 @@ def test_async_tools_propagate_execution_abort_signal():
     assert "{ signal } = {}" in WEBMCP_SOURCE
     assert "fetchJson(`/api/dependencies/${encodeURIComponent(graph_id)}/trace`, { signal })" in WEBMCP_SOURCE
     assert "api.evaluateScenario({ signal })" in WEBMCP_SOURCE
+
+
+def test_human_visible_tool_list_matches_registered_tools():
+    displayed_tools = set(re.findall(r"<span>([a-z0-9-]+)</span>", INDEX_SOURCE))
+    assert EXPECTED_TOOLS.issubset(displayed_tools)
+    assert "calculate-project-critical-path" not in INDEX_SOURCE
+
+
+def test_judge_facing_hook_keeps_core_product_claim_precise():
+    assert "AI infrastructure announcements are not deployable capacity." in INDEX_SOURCE
+    assert "agent-entered values remain ASSUMED" in INDEX_SOURCE
+    assert "unknowns remain UNKNOWN" in INDEX_SOURCE
