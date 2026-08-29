@@ -4,7 +4,13 @@ Constraint-based model for AI infrastructure capacity, strategic dependencies, c
 
 **Live app:** https://intelligence.businessaifuture.com
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/nandagomesagi/ai-systems-capacity-engine)
+## Project status
+
+This prototype was developed during the 2026 OpenAI WebMCP Challenge period, but it was **not submitted** after a review of the official geographic eligibility rules determined that the author was not eligible to enter from Brazil.
+
+No claim is made that this repository was an official competition entry, finalist, winner, or award recipient.
+
+Development continues independently as Nanda Gomes intellectual property.
 
 ## Core question
 
@@ -86,73 +92,32 @@ The Firehouse dependency example deliberately withholds a numeric critical-path 
 
 WebMCP is an interface to the model, not the product itself.
 
-## WebMCP Challenge materials
+## Protection and licensing
 
-- `docs/CHALLENGE_SUBMISSION.md` — submission copy
-- `docs/DEMO_SCRIPT.md` — sub-3-minute demo plan
-- `docs/TESTING_INSTRUCTIONS.md` — judge/tester prompts and expected behavior
-- `docs/WEBMCP_AUDIT.md` — conformance hardening and validation boundary
-- `docs/SUBMISSION_CHECKLIST.md` — remaining submission gates
+**Current and future revisions are proprietary. Copyright © 2026 Nanda Gomes. All rights reserved.**
 
-## Deploy
+No permission is granted to copy, reproduce, modify, distribute, sublicense, commercialize, or create derivative works from the current revision without prior written permission, except where required by applicable law. See `LICENSE`.
 
-A repository-root `render.yaml` defines the challenge web service. The Deploy to Render button above opens the Blueprint for this repository. Deployment uses the tested `main` branch, a pinned Python 3.11 runtime, Uvicorn, and `/api/health` as the health-check path.
+Earlier repository revisions were published under Apache License 2.0. Rights already granted for those historical Apache-2.0 revisions cannot be retroactively revoked. The current proprietary notice applies to the current revision and subsequent revisions to the extent the relevant copyright is owned by Nanda Gomes.
 
-Production custom domain:
-
-```text
-https://intelligence.businessaifuture.com
-```
-
-## Run locally
-
-Requires Python 3.11+.
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-uvicorn ai_capacity_engine.api:app --reload
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8000
-```
-
-Use ChatGPT's in-app browser or a WebMCP-enabled compatible Chrome build to test agent discovery and invocation. The normal browser interface still works when WebMCP is unavailable.
-
-## Tests
-
-```bash
-pytest -q
-```
-
-CI also parses the browser JavaScript as ES modules and runs WebMCP contract guards.
+Project and brand identifiers are not licensed for reuse merely because source code can be viewed.
 
 ## Repository map
 
 ```text
 data/northern-virginia/   source-aware MVP datasets and dependency graph seeds
-docs/                     model, architecture, evidence, charter, roadmap and challenge material
+docs/                     model, architecture, evidence, charter and roadmap
 src/ai_capacity_engine/   Python constraint and dependency engines
 webapp/                   human + WebMCP shared-state workbench
 webmcp/                   agent tool contracts
 tests/                    model, evidence, API, dependency and WebMCP contract tests
 ```
 
-## License
-
-The repository code and documentation are licensed under the **Apache License 2.0**. See `LICENSE` and `NOTICE`.
-
-Apache-2.0 was selected to keep the challenge repository genuinely open source while preserving explicit patent terms and keeping project/brand identifiers outside the software-license grant except for customary attribution.
-
 ## Status
 
 **MODEL MVP v0.1 + WebMCP workbench deployed.**
 
-The immediate objective is to validate the end-to-end chain:
+The technical objective remains to validate and evolve the chain:
 
 ```text
 TARGET
@@ -165,7 +130,7 @@ TARGET
   -> DEPLOYABLE / UNKNOWN
 ```
 
-before expanding geography or claiming national-scale capacity estimates.
+without expanding claims beyond defensible evidence.
 
 ---
 
