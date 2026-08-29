@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Evidence-aware AI infrastructure capacity constraint workbench." />
+  <title>AI Systems Capacity Engine</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">BUSINESS AI FUTURE® · NANDA GOMES AI®</div>
+      <h1>AI Systems Capacity Engine</h1>
+      <p class="subtitle">Architecture Before Amplification · Limits Before Scale</p>
+    </div>
+    <div class="status-stack">
+      <span id="api-status" class="status">API: checking</span>
+      <span id="webmcp-status" class="status">WebMCP: checking</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero panel">
+      <div>
+        <div class="eyebrow">MVP · Northern Virginia / Loudoun County</div>
+        <h2>What can actually scale — and what has to exist first?</h2>
+        <p>
+          This workbench separates observed evidence from scenario assumptions. Unknown required inputs stay unknown instead of being converted into a confident-looking number.
+        </p>
+      </div>
+      <div class="question-box">
+        <span>Core question</span>
+        <strong>Given a target AI scale, what architecture is required, what limits deployment, and what can be sustained by the target date?</strong>
+      </div>
+    </section>
+
+    <section class="grid-two">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Scenario</div>
+            <h2>Target</h2>
+          </div>
+          <button id="evaluate-button" class="primary" type="button">Evaluate scenario</button>
+        </div>
+
+        <div class="field-grid">
+          <label>
+            <span>Target capacity</span>
+            <div class="input-with-unit">
+              <input id="target-capacity" type="number" min="1" step="1" value="5000" />
+              <span>MW</span>
+            </div>
+          </label>
+          <label>
+            <span>Target date</span>
+            <input id="target-date" type="date" value="2030-12-31" />
+          </label>
+        </div>
+
+        <div class="section-subheading">
+          <h3>Domain support assumptions</h3>
+          <p>Blank = UNKNOWN. Any number entered here is explicitly classified as <strong>ASSUMED</strong>, not observed.</p>
+        </div>
+        <div id="domain-inputs" class="domain-inputs"></div>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="eyebrow">Engine output</div>
+        <h2>Capacity state</h2>
+        <div class="metric-grid">
+          <div class="metric">
+            <span>Final deployable capacity</span>
+            <strong id="deployable-capacity">—</strong>
+          </div>
+          <div class="metric">
+            <span>Provisional known minimum</span>
+            <strong id="provisional-capacity">—</strong>
+          </div>
+          <div class="metric">
+            <span>Binding constraint</span>
+            <strong id="binding-constraint">—</strong>
+          </div>
+          <div class="metric">
+            <span>Model state</span>
+            <strong id="model-state">NOT EVALUATED</strong>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <h3>Unknown required domains</h3>
+          <div id="unknown-domains" class="chips"><span class="chip muted">Not evaluated</span></div>
+        </div>
+
+        <div class="result-block">
+          <h3>Architecture gaps</h3>
+          <div id="architecture-gaps" class="gap-list"></div>
+        </div>
+
+        <div class="notice" id="epistemic-notice">
+          Final capacity is withheld whenever a required domain is unknown.
+        </div>
+      </section>
+    </section>
+
+    <section class="grid-two lower-grid">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Primary-source registry</div>
+            <h2>Evidence</h2>
+          </div>
+          <span id="evidence-count" class="count">0 records</span>
+        </div>
+        <div id="evidence-list" class="evidence-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="eyebrow">Human + agent</div>
+        <h2>Shared live state</h2>
+        <p>
+          A WebMCP-capable agent can inspect this page, change scenario inputs, run the same engine, and retrieve the evidence behind the result. Agent changes appear in this interface immediately.
+        </p>
+        <div class="tool-list" id="tool-list">
+          <span>get-scenario-state</span>
+          <span>set-scenario-target</span>
+          <span>set-domain-assumption</span>
+          <span>clear-domain-assumption</span>
+          <span>evaluate-capacity</span>
+          <span>get-evidence-record</span>
+        </div>
+
+        <div class="section-subheading">
+          <h3>Activity</h3>
+          <p>Visible actions from the human interface and WebMCP tools.</p>
+        </div>
+        <ol id="activity-log" class="activity-log"></ol>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <span>MODEL MVP v0.1</span>
+    <span>Observed ≠ Derived ≠ Assumed ≠ Unknown</span>
+  </footer>
+
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>
