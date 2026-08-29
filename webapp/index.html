@@ -120,7 +120,7 @@
         <div class="eyebrow">Human + agent</div>
         <h2>Shared live state</h2>
         <p>
-          A WebMCP-capable agent can inspect this page, change scenario inputs, run the same engine, and retrieve the evidence behind the result. Agent changes appear in this interface immediately.
+          A WebMCP-capable agent can inspect this page, change scenario inputs, run the same engine, retrieve evidence, and inspect the dependency graph. Agent changes appear in this interface immediately.
         </p>
         <div class="tool-list" id="tool-list">
           <span>get-scenario-state</span>
@@ -129,6 +129,8 @@
           <span>clear-domain-assumption</span>
           <span>evaluate-capacity</span>
           <span>get-evidence-record</span>
+          <span>trace-project-dependencies</span>
+          <span>calculate-project-critical-path</span>
         </div>
 
         <div class="section-subheading">
@@ -137,6 +139,41 @@
         </div>
         <ol id="activity-log" class="activity-log"></ol>
       </section>
+    </section>
+
+    <section class="panel dependency-panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Verified project dependency example</div>
+          <h2>Firehouse 230 kV Delivery</h2>
+          <p>The PJM/Dominion record verifies a large data-center load request and supporting grid architecture. It does not establish regional available capacity.</p>
+        </div>
+        <span class="count">Project: loudoun-firehouse-230kv</span>
+      </div>
+      <div class="grid-two">
+        <div>
+          <h3>Dependency closure</h3>
+          <div id="dependency-trace" class="dependency-list"><span class="chip muted">Loading</span></div>
+        </div>
+        <div>
+          <h3>Critical-path status</h3>
+          <div class="metric-grid">
+            <div class="metric">
+              <span>Total verified lead time</span>
+              <strong id="critical-duration">—</strong>
+            </div>
+            <div class="metric">
+              <span>Timing state</span>
+              <strong id="critical-state">—</strong>
+            </div>
+          </div>
+          <div class="result-block">
+            <h3>Unknown lead-time nodes</h3>
+            <div id="unknown-lead-times" class="chips"><span class="chip muted">Loading</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="dependency-notice" class="notice">Loading dependency evidence.</div>
     </section>
   </main>
 
