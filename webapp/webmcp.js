@@ -1,3 +1,5 @@
+import "/assets/dependencies-ui.js";
+
 function toolResult(value) {
   return {
     content: [
@@ -7,6 +9,21 @@ function toolResult(value) {
       },
     ],
   };
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    let detail = `${response.status} ${response.statusText}`;
+    try {
+      const body = await response.json();
+      detail = body.detail || detail;
+    } catch (_) {
+      // Preserve the HTTP status when the body is not JSON.
+    }
+    throw new Error(detail);
+  }
+  return response.json();
 }
 
 export async function registerWebMCPTools(api) {
@@ -135,6 +152,46 @@ export async function registerWebMCPTools(api) {
       },
       execute({ evidence_id }) {
         return toolResult(api.getEvidenceRecord(evidence_id));
+      },
+    },
+    {
+      name: "trace-project-dependencies",
+      description:
+        "Trace the verified upstream dependency closure for a project graph. The current MVP graph is firehouse-grid-delivery in Loudoun County.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          graph_id: {
+            type: "string",
+            enum: ["firehouse-grid-delivery"],
+          },
+        },
+        required: ["graph_id"],
+      },
+      async execute({ graph_id }) {
+        const trace = await fetchJson(`/api/dependencies/${encodeURIComponent(graph_id)}/trace`);
+        return toolResult(trace);
+      },
+    },
+    {
+      name: "calculate-project-critical-path",
+      description:
+        "Evaluate the timing completeness of a verified project dependency graph. The tool must return UNKNOWN total lead time when required component lead times are not supported by evidence.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          graph_id: {
+            type: "string",
+            enum: ["firehouse-grid-delivery"],
+          },
+        },
+        required: ["graph_id"],
+      },
+      async execute({ graph_id }) {
+        const critical = await fetchJson(
+          `/api/dependencies/${encodeURIComponent(graph_id)}/critical-path`,
+        );
+        return toolResult(critical);
       },
     },
   ];
