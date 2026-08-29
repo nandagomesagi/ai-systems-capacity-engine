@@ -213,7 +213,7 @@ export function getScenarioState() {
   };
 }
 
-export async function evaluateScenario(actor = "Human") {
+export async function evaluateScenario(actor = "Human", { signal } = {}) {
   const button = byId("evaluate-button");
   button.disabled = true;
   try {
@@ -225,6 +225,7 @@ export async function evaluateScenario(actor = "Human") {
         ...target,
         domain_assumptions: state.assumptions,
       }),
+      signal,
     });
     state.result = result;
     renderResult(result);
@@ -235,7 +236,7 @@ export async function evaluateScenario(actor = "Human") {
   }
 }
 
-export async function setScenarioTarget({ target_capacity_mw, target_date }) {
+export async function setScenarioTarget({ target_capacity_mw, target_date }, { signal } = {}) {
   if (!Number.isFinite(target_capacity_mw) || target_capacity_mw <= 0) {
     throw new Error("target_capacity_mw must be > 0");
   }
@@ -245,10 +246,10 @@ export async function setScenarioTarget({ target_capacity_mw, target_date }) {
   byId("target-capacity").value = String(target_capacity_mw);
   byId("target-date").value = target_date;
   logActivity("Agent", `changed target to ${target_capacity_mw.toLocaleString()} MW by ${target_date}`);
-  return evaluateScenario("Agent");
+  return evaluateScenario("Agent", { signal });
 }
 
-export async function setDomainAssumption({ domain, capacity_mw }) {
+export async function setDomainAssumption({ domain, capacity_mw }, { signal } = {}) {
   if (!DOMAINS.includes(domain)) throw new Error(`Unknown domain: ${domain}`);
   if (!Number.isFinite(capacity_mw) || capacity_mw < 0) {
     throw new Error("capacity_mw must be >= 0");
@@ -257,16 +258,16 @@ export async function setDomainAssumption({ domain, capacity_mw }) {
   domainInput(domain).value = String(capacity_mw);
   updateDomainState(domain);
   logActivity("Agent", `set ${domain} support to ${capacity_mw.toLocaleString()} MW as ASSUMED`);
-  return evaluateScenario("Agent");
+  return evaluateScenario("Agent", { signal });
 }
 
-export async function clearDomainAssumption({ domain }) {
+export async function clearDomainAssumption({ domain }, { signal } = {}) {
   if (!DOMAINS.includes(domain)) throw new Error(`Unknown domain: ${domain}`);
   delete state.assumptions[domain];
   domainInput(domain).value = "";
   updateDomainState(domain);
   logActivity("Agent", `cleared ${domain}; state restored to UNKNOWN`);
-  return evaluateScenario("Agent");
+  return evaluateScenario("Agent", { signal });
 }
 
 export function getEvidenceRecord(evidence_id) {
@@ -310,15 +311,22 @@ async function init() {
     setScenarioTarget,
     setDomainAssumption,
     clearDomainAssumption,
-    evaluateScenario: () => evaluateScenario("Agent"),
+    evaluateScenario: ({ signal } = {}) => evaluateScenario("Agent", { signal }),
     getEvidenceRecord,
-    setStatus,
-    logActivity,
   });
 
   if (tools.registered) {
     setStatus("webmcp-status", `WebMCP: ${tools.count} tools`, "ok");
-    logActivity("System", `registered ${tools.count} WebMCP tools`);
+    logActivity(
+      "System",
+      `registered ${tools.count} WebMCP tools; originAgentCluster=${String(tools.originAgentCluster)}`,
+    );
+  } else if (tools.reason === "registration_failed") {
+    setStatus("webmcp-status", "WebMCP: registration blocked", "warn");
+    logActivity(
+      "System",
+      `WebMCP registration failed: ${tools.errorName}: ${tools.errorMessage}; originAgentCluster=${String(tools.originAgentCluster)}`,
+    );
   } else {
     setStatus("webmcp-status", "WebMCP: browser unavailable", "warn");
     logActivity("System", "WebMCP API not exposed by this browser");

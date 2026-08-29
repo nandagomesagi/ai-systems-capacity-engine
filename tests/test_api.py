@@ -13,7 +13,9 @@ def test_root_and_conservative_security_headers():
     assert response.headers["x-content-type-options"] == "nosniff"
     assert response.headers["referrer-policy"] == "no-referrer"
     assert "camera=()" in response.headers["permissions-policy"]
+    assert "tools=(self)" in response.headers["permissions-policy"]
     assert response.headers["cross-origin-resource-policy"] == "same-origin"
+    assert response.headers["origin-agent-cluster"] == "?1"
 
 
 def test_health_and_default_scenario():

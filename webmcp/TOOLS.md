@@ -2,12 +2,16 @@
 
 WebMCP is the agent interface to the same live scenario state used by the human-facing workbench. It is not a separate backend product.
 
-The implementation follows the current WebMCP imperative pattern using `document.modelContext.registerTool(...)`. A compatibility fallback to `navigator.modelContext` is retained for earlier browser implementations.
+The implementation follows the current imperative WebMCP API using `document.modelContext.registerTool(...)`. A compatibility fallback to the deprecated `navigator.modelContext` location is retained for earlier implementations. Tool registration is owned by an `AbortController`; aborting its signal unregisters the page tools.
+
+The public service requests an origin-keyed agent cluster with `Origin-Agent-Cluster: ?1` and explicitly limits the `tools` Permissions Policy to `self`, matching the browser security requirements for WebMCP registration.
 
 ## Shared-state tools
 
 ### `get-scenario-state`
 Returns the target, current domain assumptions, unknown domains, and latest engine result visible on the page.
+
+Annotation: read-only.
 
 ### `set-scenario-target`
 
@@ -35,12 +39,14 @@ The value is always classified as `ASSUMED`. It must not inherit evidence refere
 Restores one domain to `UNKNOWN` and re-runs the engine.
 
 ### `evaluate-capacity`
-Runs the current live scenario. Final deployable capacity is withheld whenever a required domain remains unknown.
+Runs the current live scenario and updates the visible result. Final deployable capacity is withheld whenever a required domain remains unknown.
+
+## Evidence and dependency tools
 
 ### `get-evidence-record`
 Returns the source-aware record for one `evidence_id`, including publisher, geography, claim, limitations, and URL.
 
-## Dependency tools
+Annotation: read-only; output is marked as containing externally sourced/untrusted content for agent-safety purposes.
 
 ### `trace-project-dependencies`
 
@@ -52,7 +58,9 @@ Returns the source-aware record for one `evidence_id`, including publisher, geog
 
 Returns the verified dependency closure for the Firehouse 230 kV customer-load example and its evidence references.
 
-### `calculate-project-critical-path`
+Annotation: read-only; externally sourced content.
+
+### `calculate-critical-path`
 
 ```json
 {
@@ -61,6 +69,18 @@ Returns the verified dependency closure for the Firehouse 230 kV customer-load e
 ```
 
 Returns the critical-path state. A numeric duration is withheld when required component lead times are unknown.
+
+Annotation: read-only; externally sourced content.
+
+## Conformance rules
+
+- Tool names stay within the current browser recommendation of 30 characters where practical.
+- Every tool has an explicit JSON input schema; no-argument tools use an empty object schema.
+- Schemas reject undeclared properties with `additionalProperties: false`.
+- Tool `execute` callbacks return native JavaScript values. The WebMCP layer serializes those values for the agent; the app does not wrap them in a separate MCP `content` envelope.
+- Async WebMCP calls propagate the execution `AbortSignal` into network requests so user/agent cancellation can stop work.
+- Registration failures are surfaced separately from ordinary API startup failures.
+- The page retains the registration `AbortController` for the document lifetime.
 
 ## Human-agent interaction rule
 
