@@ -2,6 +2,8 @@
 
 Constraint-based model for AI infrastructure capacity, strategic dependencies, cyber resilience, governance, and time-to-deploy.
 
+**Live app:** https://intelligence.businessaifuture.com
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/nandagomesagi/ai-systems-capacity-engine)
 
 ## Core question
@@ -65,7 +67,7 @@ Scenario values entered by a human or agent are always `ASSUMED` and never inher
 
 ## WebMCP workbench
 
-The browser app registers tools through the current WebMCP page API (`document.modelContext.registerTool`). Mutating tools update the same inputs and results visible to the human user.
+The browser app registers tools through the WebMCP page API (`document.modelContext.registerTool`). Mutating tools update the same inputs and results visible to the human user.
 
 Current tools:
 
@@ -77,18 +79,30 @@ clear-domain-assumption
 evaluate-capacity
 get-evidence-record
 trace-project-dependencies
-calculate-project-critical-path
+calculate-critical-path
 ```
 
-The Firehouse dependency example deliberately withholds a numeric critical-path duration because the primary source does not publish defensible component lead times.
+The Firehouse dependency example deliberately withholds a numeric critical-path duration because the ingested primary evidence does not publish defensible component lead times.
 
 WebMCP is an interface to the model, not the product itself.
+
+## WebMCP Challenge materials
+
+- `docs/CHALLENGE_SUBMISSION.md` — submission copy
+- `docs/DEMO_SCRIPT.md` — sub-3-minute demo plan
+- `docs/TESTING_INSTRUCTIONS.md` — judge/tester prompts and expected behavior
+- `docs/WEBMCP_AUDIT.md` — conformance hardening and validation boundary
+- `docs/SUBMISSION_CHECKLIST.md` — remaining submission gates
 
 ## Deploy
 
 A repository-root `render.yaml` defines the challenge web service. The Deploy to Render button above opens the Blueprint for this repository. Deployment uses the tested `main` branch, a pinned Python 3.11 runtime, Uvicorn, and `/api/health` as the health-check path.
 
-Do not configure the planned custom domain until the first Render deployment is healthy and Render provides the exact DNS target.
+Production custom domain:
+
+```text
+https://intelligence.businessaifuture.com
+```
 
 ## Run locally
 
@@ -107,7 +121,7 @@ Then open:
 http://127.0.0.1:8000
 ```
 
-Use a WebMCP-capable browser environment to test agent discovery and invocation. The normal browser interface still works when WebMCP is unavailable.
+Use ChatGPT's in-app browser or a WebMCP-enabled compatible Chrome build to test agent discovery and invocation. The normal browser interface still works when WebMCP is unavailable.
 
 ## Tests
 
@@ -115,22 +129,22 @@ Use a WebMCP-capable browser environment to test agent discovery and invocation.
 pytest -q
 ```
 
-CI runs the test suite on pushes to `main` and pull requests.
+CI also parses the browser JavaScript as ES modules and runs WebMCP contract guards.
 
 ## Repository map
 
 ```text
 data/northern-virginia/   source-aware MVP datasets and dependency graph seeds
-docs/                     model, architecture, evidence, charter, roadmap
+docs/                     model, architecture, evidence, charter, roadmap and challenge material
 src/ai_capacity_engine/   Python constraint and dependency engines
 webapp/                   human + WebMCP shared-state workbench
 webmcp/                   agent tool contracts
-tests/                    model, evidence, API, and dependency tests
+tests/                    model, evidence, API, dependency and WebMCP contract tests
 ```
 
 ## Status
 
-**MODEL MVP v0.1 + WebMCP workbench implementation.**
+**MODEL MVP v0.1 + WebMCP workbench deployed.**
 
 The immediate objective is to validate the end-to-end chain:
 
